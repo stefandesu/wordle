@@ -1,0 +1,22 @@
+name: Update Word Lists
+on:
+  schedule:
+    - cron: '0 * * * *' # once per hour
+
+jobs:
+  update:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
+      - uses: actions/checkout@v2
+      - run: |
+        ./_scripts/update-word-list.sh
+        git update-index --refresh && git diff-index --quiet HEAD || ./_scripts/update-hash.sh
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        env:
+          commit-message: Update word lists (${{ steps.date.outputs.today }})
+          title: Update word lists (${{ steps.date.outputs.today }})
+          body: It seems NYT updated their word lists
