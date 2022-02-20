@@ -12,8 +12,8 @@ jobs:
         run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
       - uses: actions/checkout@v2
       - run: |
-        ./_scripts/update-word-list.sh
-        git update-index --refresh && git diff-index --quiet HEAD || ./_scripts/update-hash.sh
+          ./_scripts/update-word-list.sh
+          git update-index --refresh && git diff-index --quiet HEAD || ./_scripts/update-hash.sh
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         env:
