@@ -6,6 +6,9 @@ oldhash=$(sed -n "s/\s*window.wordle.hash = '\(.*\)';$/\1/p" index.html | sed "s
 newhash=$(openssl rand -hex 4)
 
 # Replace hash in index.html
-sed "s/$oldhash/$newhash/g" index.html > index.html
+mv index.html index.html.old
+sed "s/$oldhash/$newhash/g" index.html.old > index.html
+rm index.html.old
+
 # Rename .js file
 mv "main.$oldhash.js" "main.$newhash.js"
