@@ -13,9 +13,8 @@ mkdir -p $folder
 # Download NYT Wordle index.html
 curl $url_index --output $folder/index.html
 # Figure out name of JS file
-hash=$(sed -n "s/^.*main\.\(.*\)\.js.*$/\1/p" $folder/index.html)
+url_js=$(sed -n "s/^.*src=\"\(.*wordle\..*\.js\)\".*$/\1/p" $folder/index.html | sed "s/\".*$//")
 # Download JS file
-url_js=$url_base/main.$hash.js
 curl $url_js --output $folder/main.js
 
 # Extract answer list
