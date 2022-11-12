@@ -2,6 +2,9 @@ name: Update Word Lists
 on:
   schedule:
     - cron: '0 * * * *' # once per hour
+  push:
+    branches:
+      - main
 
 jobs:
   update:
