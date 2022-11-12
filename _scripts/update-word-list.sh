@@ -18,7 +18,8 @@ url_js=$(sed -n "s/^.*src=\"\(.*wordle\..*\.js\)\".*$/\1/p" $folder/index.html |
 curl $url_js --output $folder/main.js
 
 # Extract answer list
-answers=$(cat $folder/main.js | grep -Eo '\["cigar",[^]]*\]')
+answers=$(cat $folder/main.js | grep -Eo '\"cigar",[^]]*\]')
+answers="[$answers"
 allowed=$(cat $folder/main.js | grep -Eo '\["aahed",[^]]*\]')
 
 # ...
